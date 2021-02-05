@@ -15,8 +15,8 @@ option(BUILD_MEMSAVE "Use memory-saving mode. Might influence performance negati
 option(BUILD_TEST "Build Google Tests for mapMAP modules." ON)
 option(BUILD_DEMO "Build a demo, reading SHIMF datasets into mapMAP." ON)
 
-set(TBB_INCLUDE_DIRS "/usr/include" CACHE PATH "Path to where the TBB include files (tbb/) reside")
-set(TBB_LIBRARY "/usr/lib" CACHE PATH "Path to where the TBB library files (libtbb.so etc.) reside")
+set(TBB_INCLUDE_DIRS "/Users/daniel/prj/pkg/oneTBB/include" CACHE PATH "Path to where the TBB include files (tbb/) reside")
+set(TBB_LIBRARY "/Users/daniel/prj/pkg/oneTBB/build/macos_arm64_clang_cc12.0.0_ios14.4_release" CACHE PATH "Path to where the TBB library files (libtbb.so etc.) reside")
 
 # default to Release build and C++11 mode
 set(CMAKE_CXX_STANDARD 11)
@@ -27,13 +27,13 @@ endif(NOT CMAKE_BUILD_TYPE)
 # set optimization options for GCC on unixoid systems
 # uses -march=native to make the compiler set __SSE4_2__, __AVX__ and
 # __AVX2__ to fit to the computer
-set(CMAKE_CXX_FLAGS "-Wall -march=native")
+set(CMAKE_CXX_FLAGS "-Wall -arch=arm64")
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g")
 elseif(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -funroll-loops -mfpmath=sse -flto -g")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -funroll-loops -flto -g")
 else(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -funroll-loops -mfpmath=sse -flto")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -funroll-loops -flto")
 endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 # augment build parameters for optional builds
@@ -55,6 +55,7 @@ find_package(TBB COMPONENTS tbbmalloc_proxy tbbmalloc tbb REQUIRED)
 
 # include headers
 include_directories(
+    /Users/daniel/prj/pkg/oneTBB/include
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/mapmap
     ${PROJECT_SOURCE_DIR}/ext/dset)
