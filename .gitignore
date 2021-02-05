@@ -4,3 +4,4 @@ gtest
 datasets
 **/*.bin
 .vscode
+.DS_Store
